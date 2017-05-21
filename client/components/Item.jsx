@@ -13,7 +13,7 @@ class Item extends React.Component {
             }
         };
     }
-    componentDidMount(){
+    componentDidMount() {
         fetch(`https://api.punkapi.com/v2/beers/${this.props.match.params.id}`).then((response)=>response.json())
             .then((response) => {
                 console.log('response', response[0])
@@ -31,10 +31,15 @@ class Item extends React.Component {
     }
     render() {
         const item = this.state.item;
-        // should be shorter line
-        const hops = item.ingredients.hops.map((hopsItem, i) => (<span key={i}>{hopsItem.name} ({hopsItem.amount.value} {hopsItem.amount.unit}){i+1!==item.ingredients.hops.length? ', ' : '' } </span>));
-        const malts = item.ingredients.malt.map((maltItem, i) => (<span key={i}>{maltItem.name} ({maltItem.amount.value} {maltItem.amount.unit}){i+1!==item.ingredients.malt.length? ', ' : '' } </span>));
-        const pairings = item.food_pairing.map((pairing, i) => (<span key={i}>{pairing}{i+1 !== item.food_pairing.length ? ', ' : '' } </span>));
+        const hops = item.ingredients.hops.map((hopsItem, i) => (
+            <span key={i}>{hopsItem.name} ({hopsItem.amount.value} {hopsItem.amount.unit}){i+1!==item.ingredients.hops.length? ', ' : '' } </span>
+        ));
+        const malts = item.ingredients.malt.map((maltItem, i) => (
+            <span key={i}>{maltItem.name} ({maltItem.amount.value} {maltItem.amount.unit}){i+1!==item.ingredients.malt.length? ', ' : '' } </span>
+        ));
+        const pairings = item.food_pairing.map((pairing, i) => (
+            <span key={i}>{pairing}{i+1 !== item.food_pairing.length ? ', ' : '' } </span>
+        ));
         return (
             <div style={this.styles.wrapper}>
                 <div className="col-xs-2"><img style={this.styles.img} src={item.image_url} /></div>

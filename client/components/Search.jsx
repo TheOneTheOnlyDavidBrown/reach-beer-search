@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemList from './ItemList.jsx';
-import { Link } from 'react-router-dom'
+
 class Search extends React.Component {
     constructor() {
         super();
@@ -40,33 +40,30 @@ class Search extends React.Component {
         this.getItems(this.props.match.params.term);
     }
     render() {
-        // arbitrarily choosing 40 as the threshold for bitterness.
-        const listItems = this.state.items.map((item) =>
-            <div key={item.id}>
-                <i className="fa fa-beer" aria-hidden="true"></i> <Link to={'/item/'+item.id}>{item.name}</Link> ({item.abv}% ABV, {item.ibu < 40 ? 'bitter' : 'not bitter'})
-            </div>
-        );
         return (
             <div style={this.styles.wrapper}>
                 <form style={this.styles.form} onSubmit={this.onSubmit}>
                     <div className="form-group">
-                    <input className="form-control" placeholder="Search beer name/style" ref="search"></input>
+                    <input className="form-control" placeholder="Search beer keyword" ref="search"></input>
                     </div>
                     <button className="btn btn-primary" type="submit">Search</button>
                 </form>
 
                 {((items) => {
-                    // IIFE so a function can be in the jsx. theres probably a better way to do this
+                    // IIFE so a function can be in the jsx. there's probably a better way to do this because this is ugly
                     // only show if there are items in the list
                     if (items.length > 0) {
                         return (
                             <div>
-                                <div>Results for {this.props.match.params.term}</div>
-                                {listItems}
+                                <div>Results for {this.props.match.params.term}:</div>
+                                <ItemList list={this.state.items}/>
                             </div>
                         );
                     }
-                })(listItems)}
+                    else {
+                        return (<div>Search by beer keyword above.</div>)
+                    }
+                })(this.state.items)}
             </div>
         );
     }
