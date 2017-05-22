@@ -5,7 +5,9 @@ import axios from 'axios';
 class Search extends React.Component {
     constructor() {
         super();
-        this.state = {items:[]};
+        this.state = {
+            items: []
+        };
         this.onSubmit = this.onSubmit.bind(this);
     }
     onSubmit(e) {
@@ -15,6 +17,7 @@ class Search extends React.Component {
         this.props.history.push(`/search/${term}`);
     }
     getItems(term) {
+        if (!term) return;
         // api page limit is 80
         axios.get(`https://api.punkapi.com/v2/beers?per_page=80&beer_name=${term}`)
             .then((response) => {
@@ -32,11 +35,9 @@ class Search extends React.Component {
         return { wrapper, form };
     }
     componentWillReceiveProps(newProps) {
-        if (!newProps.match.params.term) return;
         this.getItems(newProps.match.params.term);
     }
     componentDidMount() {
-        if (!this.props.match.params.term) return;
         this.getItems(this.props.match.params.term);
     }
     render() {
@@ -44,26 +45,18 @@ class Search extends React.Component {
             <div style={this.styles.wrapper}>
                 <form style={this.styles.form} onSubmit={this.onSubmit}>
                     <div className="form-group">
-                    <input className="form-control" placeholder="Search beer keyword" ref="search"></input>
+                        <input className="form-control" placeholder="Search beer keyword" ref="search"></input>
                     </div>
                     <button className="btn btn-primary" type="submit">Search</button>
                 </form>
 
-                {((items) => {
-                    // IIFE so a function can be in the jsx. there's probably a better way to do this because this is ugly
-                    // only show if there are items in the list
-                    if (items.length > 0) {
-                        return (
-                            <div>
-                                <div>Results for {this.props.match.params.term}:</div>
-                                <ItemList list={this.state.items}/>
-                            </div>
-                        );
-                    }
-                    else {
-                        return (<div>Search by beer keyword above.</div>)
-                    }
-                })(this.state.items)}
+                <div style={this.state.items.length === 0 ? {display: 'inherit'} : {display: 'none'}}>
+                    Search by beer keyword above.
+                </div>
+                <div style={this.state.items.length === 0 ? {display: 'none'} : {display: 'inherit'}}>
+                    <div>Results for {this.props.match.params.term}:</div>
+                    <ItemList list={this.state.items} />
+                </div>
             </div>
         );
     }

@@ -5,10 +5,10 @@ class Item extends React.Component {
     constructor() {
         super();
         this.state = {
-            item:{
-                ingredients:{
-                    hops:[],
-                    malt:[]
+            item: {
+                ingredients: {
+                    hops: [],
+                    malt: []
                 },
                 food_pairing: []
             }
@@ -32,11 +32,12 @@ class Item extends React.Component {
     }
     render() {
         const item = this.state.item;
+        // using "i" as a key (despite AirBnb's styleguide) because there is no id on the object from the backend and no property that isn't unique
         const hops = item.ingredients.hops.map((hopsItem, i) => (
-            <span key={i}>{hopsItem.name} ({hopsItem.amount.value} {hopsItem.amount.unit}){i+1!==item.ingredients.hops.length? ', ' : '' } </span>
+            <span key={i}>{hopsItem.name} ({hopsItem.amount.value} {hopsItem.amount.unit}){i+1 !== item.ingredients.hops.length? ', ' : '' } </span>
         ));
         const malts = item.ingredients.malt.map((maltItem, i) => (
-            <span key={i}>{maltItem.name} ({maltItem.amount.value} {maltItem.amount.unit}){i+1!==item.ingredients.malt.length? ', ' : '' } </span>
+            <span key={i}>{maltItem.name} ({maltItem.amount.value} {maltItem.amount.unit}){i+1 !== item.ingredients.malt.length? ', ' : '' } </span>
         ));
         const pairings = item.food_pairing.map((pairing, i) => (
             <span key={i}>{pairing}{i+1 !== item.food_pairing.length ? ', ' : '' } </span>
