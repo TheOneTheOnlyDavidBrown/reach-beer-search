@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class Item extends React.Component {
     constructor() {
@@ -14,10 +15,10 @@ class Item extends React.Component {
         };
     }
     componentDidMount() {
-        fetch(`https://api.punkapi.com/v2/beers/${this.props.match.params.id}`).then((response)=>response.json())
+        axios.get(`https://api.punkapi.com/v2/beers/${this.props.match.params.id}`)
             .then((response) => {
-                console.log('response', response[0])
-                this.setState({item: response[0]});
+                console.log('response', response.data[0])
+                this.setState({item: response.data[0]});
             });
     }
     get styles() {
@@ -70,4 +71,3 @@ class Item extends React.Component {
 }
 export default Item;
 
-//abv: 4.6attenuation_level: 81.4boil_volume: {value: 25, unit: "liters"}brewers_tips: "Start the fermentation off at 20 ̊C and allow it to rise as high as 25 ̊C. This will increase the fruity character of the yeast."contributed_by: "Sam Mason <samjbmason>"description: "A session IPA brewed with a diverse grain bill, hopped with Simcoe and Amarillo and fermented with saison yeast, for an incredible level of depth in a low ABV beer. Spicy, fruity, complex, refreshing and dry."ebc: 15first_brewed: "06/2014"food_pairing: (3) ["Halibut with caper brown butter", "Creamy gorgonzola and satsuma salad", "Spicy Daal with garlic naan bread"]ibu: 30id: 61image_url: "https://images.punkapi.com/v2/61.png"ingredients: {malt: Array(6), hops: Array(2), yeast: "Wyeast 3711 - French Saison™"}method: {mash_temp: Array(1), fermentation: {…}, twist: "Cumin: 0.5g at end, Caraway: 1g at end, Peppercorns (Pink): 5g at end, Grains of Paradise: 5g at end"}name: "Magic Stone Dog (w/Magic Rock & Stone Brewing Co.)"ph: 4.4srm: 7.5tagline: "Session Farmhouse IPA - Stone / Magic Rock Collab."target_fg: 1008target_og: 1043volume: {value: 20, unit: "liters"}__proto__: Object

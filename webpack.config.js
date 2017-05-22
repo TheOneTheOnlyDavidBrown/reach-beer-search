@@ -1,5 +1,4 @@
 const path = require('path');
-const WriteFilePlugin = require('write-file-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: './client/index.html',
@@ -14,6 +13,10 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  devServer: {
+    host: '0.0.0.0',
+    disableHostCheck: true
+  },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
@@ -26,7 +29,6 @@ module.exports = {
       poll: 1000
   },
   plugins: [
-    new WriteFilePlugin(),
     HtmlWebpackPluginConfig
   ],
 }

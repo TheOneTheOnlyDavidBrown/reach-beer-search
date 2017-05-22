@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemList from './ItemList.jsx';
+import axios from 'axios';
 
 class Search extends React.Component {
     constructor() {
@@ -15,11 +16,10 @@ class Search extends React.Component {
     }
     getItems(term) {
         // api page limit is 80
-        fetch(`https://api.punkapi.com/v2/beers?per_page=80&beer_name=${term}`)
-            .then(response=>response.json())
+        axios.get(`https://api.punkapi.com/v2/beers?per_page=80&beer_name=${term}`)
             .then((response) => {
-                console.log('resp',response);
-                this.setState({items: response});
+                console.log('resp',response.data);
+                this.setState({items: response.data});
             });
     }
     get styles() {
